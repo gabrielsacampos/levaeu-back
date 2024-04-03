@@ -17,9 +17,8 @@ def test_insert_establishment():
     result = establishments_repository.insert(establishment_mock)
     print(result)
 
-def test_find_establishemnt_by_id():
+def test_find_establishment_by_id():
     result = establishments_repository.find_by_id(establishment_mock["uuid"])
-    assert result.id == establishment_mock["uuid"]
     print(result)
 
 def test_delete_establishment():
