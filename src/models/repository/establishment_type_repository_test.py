@@ -15,7 +15,7 @@ def test_insert_establishment_type():
     establishments_repository = EstablishmentTypesRepository()
     result = establishments_repository.insert({ 
         "uuid": "private-park-uuid",
-        "name": "Private Park" 
+        "name": "Private Park"
     })
     print(result)
 

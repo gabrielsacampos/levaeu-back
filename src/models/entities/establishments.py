@@ -8,6 +8,7 @@ class Establishments(Base):
     id = Column(String, primary_key=True)
     name = Column(String, nullable=False)
     address = Column(String, nullable=False)
+    description = Column(String, nullable=True)
     id_type = Column(String, ForeignKey('establishment_types.id'), nullable=False) 
     establishment_type = relationship("EstablishmentTypes", back_populates="establishments")
     

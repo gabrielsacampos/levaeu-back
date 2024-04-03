@@ -11,6 +11,7 @@ def test_insert_establishment():
         "uuid": "Snack Bar",
         "name": "The Grate Place",
         "address": "The Grate Street, 123",
+        "description": "The Grate Place to be",
         "id_type": "private-park-uuid"
     }
     

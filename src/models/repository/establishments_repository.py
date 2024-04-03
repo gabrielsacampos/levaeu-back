@@ -9,6 +9,7 @@ class EstablishmentsRepository:
                 id=establishment.get("uuid"),
                 name=establishment.get("name"),
                 address=establishment.get("address"),
+                description=establishment.get("description"),
                 type=establishment.get("id_type")
             )
             database.session.add(establishment)
