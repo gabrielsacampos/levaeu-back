@@ -10,7 +10,7 @@ class EstablishmentsRepository:
                 name=establishment.get("name"),
                 address=establishment.get("address"),
                 description=establishment.get("description"),
-                type=establishment.get("id_type")
+                id_type=establishment.get("id_type")
             )
             database.session.add(establishment)
             database.session.commit()
@@ -19,12 +19,12 @@ class EstablishmentsRepository:
     
     def find_by_id(self, establishment_id: Dict) -> Dict:
         with connection_handler as database:
-            establishments = database.session.query(Establishments).filter_by(id=establishment_id).first()
-            return establishments
+            establishment = database.session.query(Establishments).filter_by(id=establishment_id).first()
+            return establishment
         
     def delete(self, establishment_id: Dict) -> Dict:
         with connection_handler as database:
-            establishments = database.session.query(Establishments).filter_by(id=establishment_id).first()
-            database.session.delete(establishments)
+            establishment = database.session.query(Establishments).filter_by(id=establishment_id).first()
+            database.session.delete(establishment)
             database.session.commit()
-            return establishments
+            return establishment

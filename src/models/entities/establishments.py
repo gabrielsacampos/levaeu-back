@@ -11,6 +11,3 @@ class Establishments(Base):
     description = Column(String, nullable=True)
     id_type = Column(String, ForeignKey('establishment_types.id'), nullable=False) 
     establishment_type = relationship("EstablishmentTypes", back_populates="establishments")
-    
-
-    
