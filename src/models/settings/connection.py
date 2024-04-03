@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from .base import Base
 import src.models.entities
+from sqlalchemy import text
 
 
 class DBConnectionHandler: 
@@ -12,6 +13,10 @@ class DBConnectionHandler:
 
     def connect(self):
         self.__engine = create_engine(self.__connection_path)
+
+        with self.__engine.connect() as connection:
+            connection.execute(text("PRAGMA foreign_keys=ON"))
+        
         Base.metadata.create_all(self.__engine)
         return self.__engine
     
