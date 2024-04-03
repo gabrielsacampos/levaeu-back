@@ -1,5 +1,6 @@
-from src.models.setting.base import Base
-from sqlalchemy import Column, Integer, String
+from src.models.settings.base import Base
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, ForeignKey
 
 class Establishments(Base):
     __tablename__: str = 'establishments'
@@ -7,7 +8,8 @@ class Establishments(Base):
     id = Column(String, primary_key=True)
     name = Column(String, nullable=False)
     address = Column(String, nullable=False)
-    type = Column(String, nullable=False)
+    id_type = Column(String, ForeignKey('establishment_types.id'), nullable=False) 
+    establishment_type = relationship("EstablishmentTypes", back_populates="establishments")
     
 
     

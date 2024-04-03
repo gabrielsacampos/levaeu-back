@@ -1,17 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from .base import Base
+import src.models.entities
+
 
 class DBConnectionHandler: 
-    def __init__(self):
-        self.__connection_path = "{}:///{}".format(
-            "sqlite",
-            "storage.db"
-        )
+    def __init__(self) -> None:
+        self.__connection_path = "sqlite:///storage.sqlite3"
         self.__engine = None
-        self.__session = None
+        self.session = None
 
     def connect(self):
         self.__engine = create_engine(self.__connection_path)
+        Base.metadata.create_all(self.__engine)
         return self.__engine
     
     def get_engine(self):
@@ -19,8 +20,10 @@ class DBConnectionHandler:
     
     def __enter__(self):
         session_maker = sessionmaker()
-        self.__session = session_maker(bind=self.__engine)
+        self.session = session_maker(bind=self.__engine)
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__session.close()
+        self.session.close()
+
+connection_handler = DBConnectionHandler()
