@@ -1,6 +1,7 @@
 from src.database.settings.base import Base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, DateTime
+from datetime import datetime
 
 class Establishments(Base):
     __tablename__: str = 'establishments'
@@ -11,7 +12,9 @@ class Establishments(Base):
     description = Column(String, nullable=True)
     id_type = Column(String, ForeignKey('establishment_types.id'), nullable=False) 
     id_sponsor = Column(String, ForeignKey('users.id'), nullable=False)
-    
+    created_at = Column(DateTime, default=datetime.utcnow())
+    updated_at = Column(DateTime, default=datetime.utcnow(), onupdate=datetime.utcnow())
+
     establishment_type = relationship("EstablishmentTypes", back_populates="establishments")
     ratings = relationship("Ratings", back_populates="establishment")
     user = relationship("Users", back_populates="establishments")

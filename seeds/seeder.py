@@ -1,6 +1,5 @@
 import os
 
-
 from sqlalchemyseed import load_entities_from_json, Seeder
 from src.database.settings.connection import connection_handler
 
