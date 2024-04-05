@@ -1,5 +1,5 @@
 from sqlalchemy.orm import relationship
-from src.models.settings.base import Base
+from src.database.settings.base import Base
 from sqlalchemy import Column, Integer, String, UniqueConstraint
 
 class EstablishmentTypes(Base):

@@ -1,4 +1,4 @@
-from src.models.settings.connection import connection_handler
+from src.database.settings.connection import connection_handler
 from .establishments_repository import EstablishmentsRepository
 import pytest
 
@@ -10,7 +10,8 @@ establishment_mock = {
         "name": "The Grate Place",
         "address": "The Grate Street, 123",
         "description": "The Grate Place to be",
-        "id_type": "private-park-uuid"
+        "id_type": "uuid-park",
+        "id_sponsor": "uuid-john"
     } 
 
 def test_insert_establishment():

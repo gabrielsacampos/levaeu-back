@@ -1,5 +1,5 @@
 from typing import Dict
-from src.models.settings.connection import connection_handler
+from src.database.settings.connection import connection_handler
 from src.models.entities.ratings import Ratings
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
@@ -42,3 +42,9 @@ class RatingsRepository:
                 database.session.rollback()
                 raise Exception("Could not delete rating while is not found.")    
             return rating
+        
+    def get_all(self) -> Dict:
+        with connection_handler as database:
+            ratings = database.session.query(Ratings).all()
+            ratings = [rating.to_dict() for rating in ratings]
+            return ratings

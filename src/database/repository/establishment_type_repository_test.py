@@ -1,14 +1,14 @@
-from src.models.settings.connection import connection_handler
+from src.database.settings.connection import connection_handler
 from .establishment_type_repository import EstablishmentTypesRepository
 import pytest
-from src.models.repository.establishment_type_repository import EstablishmentTypesRepository
+
 
 connection_handler.connect()
 establishments_repository = EstablishmentTypesRepository()
 
 establishment_type_mock = {
-        "uuid": "random-uuid-cinema-020",
-        "name": "Cinema"
+        "uuid": "uuid-new-type",
+        "name": "New Type"
 }
 
 def test_insert_establishment_type():

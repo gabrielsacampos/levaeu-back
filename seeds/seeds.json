@@ -1,0 +1,163 @@
+[
+    {
+        "model": "src.models.entities.EstablishmentTypes",
+        "data": [
+            {
+                "id": "uuid-cinema",
+                "name": "cinema"
+            },
+            {
+                "id": "uuid-restaurant",
+                "name": "restaurant"
+            },
+            {
+                "id": "uuid-park",
+                "name": "park"
+            }
+        ]
+    },
+    {
+        "model": "src.models.entities.Users",
+        "data": [
+            {
+                "id": "uuid-john",
+                "name": "John Doe",
+                "email": "john@email.com"
+            },
+            {
+                "id": "uuid-jane",
+                "name": "Jane Doe",
+                "email": "jane@email.com"
+            },
+            {
+                "id": "uuid-jack",
+                "name": "Jack Doe",
+                "email": "jack@email.com"
+            },
+            {
+                "id": "uuid-jill",
+                "name": "Jill Doe",
+                "email": "jill@emai.com"
+            },
+            {
+                "id": "uuid-james",
+                "name": "James Doe",
+                "email": "james@emai.com"
+            },
+            {
+                "id": "uuid-jessica",
+                "name": "Jessica Doe",
+                "email": "jessica@email.com"
+            }, 
+            {
+                "id": "uuid-jennifer",
+                "name": "Jennifer Doe",
+                "email": "jennifer@email.com"
+            },
+            {
+                "id": "uuid-julie",
+                "name": "Julie Doe",
+                "email": "julie@emai.com"
+            }
+        ]
+    },
+    {
+        "model": "src.models.entities.Establishments",
+        "data": [
+            {
+                "id": "uuid-the-great-cinema",
+                "name": "The Great Cinema",
+                "address": "The Greate Street, 312",
+                "description": "The best cinema in the world",
+                "id_sponsor": "uuid-john",
+                "id_type": "uuid-cinema"
+            },
+            {
+                "id": "uuid-the-great-restaurant",
+                "name": "The Great Restaurant",
+                "address": "The Greate Street, 312",
+                "description": "The best restaurant in the world",
+                "id_sponsor": "uuid-jane",
+                "id_type": "uuid-restaurant"
+            },
+            {
+                "id": "uuid-the-big-park",
+                "name": "The Big Park",
+                "address": "The Big Avenue, 3",
+                "description": "The best park in the world",
+                "id_sponsor": "uuid-jane",
+                "id_type": "uuid-park"
+            }
+        ]
+    },
+    {
+        "model": "src.models.entities.Ratings",
+        "data": [
+            {
+                "id": "uuid-john-the-great-cinema",
+                "id_user": "uuid-john",
+                "id_establishment": "uuid-the-great-cinema",
+                "starts": 5,
+                "comment": "The best cinema in the world"
+
+            },
+            {
+                "id": "uuid-jane-the-great-cinema",
+                "id_user": "uuid-jane",
+                "id_establishment": "uuid-the-great-cinema",
+                "starts": 4,
+                "comment": "My children love this cinema"
+            },
+            {
+                "id": "uuid-jack-the-great-cinema",
+                "id_user": "uuid-jack",
+                "id_establishment": "uuid-the-great-cinema",
+                "comment": "I don't like this cinema",
+                "starts": 3
+            },
+            {
+                "id": "uuid-john-the-great-restaurant",
+                "id_user": "uuid-john",
+                "id_establishment": "uuid-the-great-restaurant",
+                "starts": 5,
+                "comment": "The food was great"
+
+            },
+            {
+                "id": "uuid-jane-the-great-restaurant",
+                "id_user": "uuid-jane",
+                "id_establishment": "uuid-the-great-restaurant",
+                "stars": 4,
+                "comment": "The service was great"
+            },
+            {
+                "id": "uuid-jack-the-great-restaurant",
+                "id_user": "uuid-jack",
+                "id_establishment": "uuid-the-great-restaurant",
+                "stars": 3,
+                "comment": "I don't like this restaurant"
+            },
+            {
+                "id": "uuid-john-the-big-park",
+                "id_user": "uuid-john",
+                "id_establishment": "uuid-the-big-park",
+                "stars": 5,
+                "comment": "The best park in the world"
+            },
+            {
+                "id": "uuid-jane-the-big-park",
+                "id_user": "uuid-jane",
+                "id_establishment": "uuid-the-big-park",
+                "stars": 4,
+                "comment": "Nice place to walk with my dog"
+            },
+            {
+                "id": "uuid-jack-the-big-park",
+                "id_user": "uuid-jack",
+                "id_establishment": "uuid-the-big-park",
+                "stars": 3,
+                "comment": "There is no place to sit down in this park"
+            }
+        ]
+    }
+]

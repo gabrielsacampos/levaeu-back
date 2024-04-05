@@ -1,5 +1,5 @@
 from typing import Dict
-from src.models.settings.connection import connection_handler
+from src.database.settings.connection import connection_handler
 from src.models.entities.establishments import Establishments
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
@@ -15,7 +15,8 @@ class EstablishmentsRepository:
                     name=establishment.get("name"),
                     address=establishment.get("address"),
                     description=establishment.get("description"),
-                    id_type=establishment.get("id_type")
+                    id_type=establishment.get("id_type"),
+                    id_sponsor=establishment.get("id_sponsor")
                 )
                 database.session.add(establishment)
                 database.session.commit()
@@ -46,3 +47,10 @@ class EstablishmentsRepository:
                 database.session.rollback()
                 raise Exception("Could not delete establishment while is not found.")    
             return establishment
+
+    def get_all(self) -> Dict:
+        with connection_handler as database:
+            establishments = database.session.query(Establishments).all()
+            establishments = [establishment.to_dict() for establishment in establishments]
+            return establishments
+        
