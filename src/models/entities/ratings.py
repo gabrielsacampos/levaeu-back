@@ -8,7 +8,7 @@ class Ratings(Base):
         
         id = Column(String, primary_key=True)
         stars = Column(Integer, nullable=False)
-        comment = Column(String, nullable=False)
+        review = Column(String, nullable=False)
         id_establishment = Column(String, ForeignKey("establishments.id"))
         id_user = Column(String, ForeignKey("users.id"))
         created_at = Column(DateTime, default=datetime.utcnow())
