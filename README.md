@@ -8,3 +8,5 @@ The architecture of this project follows the MVC pattern, separating the fronten
 
 
 
+ModuleNotFoundError:
+ - export PYTHONPATH=./:$PYTHONPATH
