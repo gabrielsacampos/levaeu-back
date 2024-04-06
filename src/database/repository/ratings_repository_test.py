@@ -4,7 +4,7 @@ import pytest
 rating_mock = {
     "uuid": "random-uuid-rating-001",
     "stars": 5,
-    "comment": "Nice place to go with friends and family.",
+    "review": "Nice place to go with friends and family.",
     "id_establishment": "uuid-the-great-cinema",
     "id_user": "uuid-jack"
 }

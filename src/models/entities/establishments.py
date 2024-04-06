@@ -1,5 +1,6 @@
 from src.database.settings.base import Base
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from sqlalchemy import Column, String, ForeignKey, DateTime
 from datetime import datetime
 
@@ -9,11 +10,11 @@ class Establishments(Base):
     id = Column(String, primary_key=True)
     name = Column(String, nullable=False)
     address = Column(String, nullable=False)
-    description = Column(String, nullable=True)
+    description = Column(String, nullable=False)
     id_type = Column(String, ForeignKey('establishment_types.id'), nullable=False) 
     id_sponsor = Column(String, ForeignKey('users.id'), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow())
-    updated_at = Column(DateTime, default=datetime.utcnow(), onupdate=datetime.utcnow())
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
     establishment_type = relationship("EstablishmentTypes", back_populates="establishments")
     ratings = relationship("Ratings", back_populates="establishment")

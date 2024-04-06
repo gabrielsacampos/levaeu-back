@@ -2,6 +2,7 @@ from sqlalchemy.orm import relationship
 from src.database.settings.base import Base
 from sqlalchemy import Column, String, ForeignKey, DateTime, Integer
 from datetime import datetime
+from sqlalchemy.sql import func
 
 class Ratings(Base):
         __tablename__: str = 'ratings'
@@ -9,10 +10,10 @@ class Ratings(Base):
         id = Column(String, primary_key=True)
         stars = Column(Integer, nullable=False)
         review = Column(String, nullable=False)
-        id_establishment = Column(String, ForeignKey("establishments.id"))
+        id_establishment = Column(String, ForeignKey("establishments.id"), nullable=False)
         id_user = Column(String, ForeignKey("users.id"))
-        created_at = Column(DateTime, default=datetime.utcnow())
-        updated_at = Column(DateTime, default=datetime.utcnow(), onupdate=datetime.utcnow())
+        created_at = Column(DateTime, default=func.now())
+        updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
         
         establishment = relationship("Establishments", back_populates="ratings")
         user = relationship("Users", back_populates="ratings")
