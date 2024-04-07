@@ -26,6 +26,18 @@ class UsersRepository:
                 database.session.rollback()  
                 raise error
             
+    def get_user_by_id(self, user_id: str) -> Dict:
+        with connection_handler as database:
+            user = database.session.query(Users).filter(Users.id == user_id).first()
+            return user.to_dict()
+        
+    def delete_user(self, user_id: str) -> Dict:
+        with connection_handler as database:
+            user = database.session.query(Users).filter(Users.id == user_id).first()
+            database.session.delete(user)
+            database.session.commit()
+            return user.to_dict()
+            
     def get_all(self) -> Dict:
         with connection_handler as database:
             users = database.session.query(Users).all()
