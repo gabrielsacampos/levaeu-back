@@ -10,7 +10,7 @@ The architecture of this project follows the MVC pattern, separating the fronten
 
 #### seeds 
    > When needed, we can seed our database from _./seeds/seeder.py_
-    It runs a pandas to **TRUNCATE** each table and seed them with fake data from xslx file at _.seed/seed.xlsx_
+    It runs a pandas to **DROP** each table and seed them with fake data from xslx file at _.seed/seed.xlsx_
      
 ### src
 #### - models
