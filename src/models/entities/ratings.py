@@ -11,7 +11,7 @@ class Ratings(Base):
         stars = Column(Integer, nullable=False)
         review = Column(String, nullable=False)
         id_establishment = Column(String, ForeignKey("establishments.id"), nullable=False)
-        id_user = Column(String, ForeignKey("users.id"))
+        id_user = Column(String, ForeignKey("users.id"), nullable=False)
         created_at = Column(DateTime, default=func.now())
         updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
         
