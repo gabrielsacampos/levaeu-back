@@ -8,8 +8,7 @@ user_mock = {
 }
 
 def test_create_user():
-    response = UsersRepository().insert(user_mock)
-    print(response)
+    UsersRepository().insert(user_mock)
 
 def test_get_user_by_id():
     user = UsersRepository().get_user_by_id(user_mock["uuid"])
@@ -18,11 +17,11 @@ def test_get_user_by_id():
     assert user["email"] == user_mock["email"]
 
 def test_get_all_users():
-    response = UsersRepository().get_all()
-    print(response)
+    UsersRepository().get_all()
+    
     
 
 def test_delete_user():
-    response = UsersRepository().delete_user(user_mock["uuid"])
-    print(response)
+    UsersRepository().delete_user(user_mock["uuid"])
+    
     

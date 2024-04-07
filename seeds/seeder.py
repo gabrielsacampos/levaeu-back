@@ -1,35 +1,44 @@
 import os
 import pandas as pd
-from src.models.database.settings.connection import connection_handler
+from src.models.database.settings.connection import DBConnectionHandler
+from sqlalchemy import text
 from sqlalchemy import inspect
 from sqlalchemy.exc import IntegrityError
 from termcolor import colored
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
+
+class Seeder(DBConnectionHandler):
+    def __init__(self) -> None:
+        super().__init__()
+
+        self.__seeds_path = os.path.dirname(os.path.realpath(__file__)) + '/seeds.xlsx'
+        sheets_names = pd.ExcelFile(self.__seeds_path).sheet_names
+
+        db_table_names = inspect(self.engine).get_table_names()
+        self.tables_to_seed = [table for table in sheets_names if table in db_table_names]
+
+    def drop_tables(self, tables_list: list):
+        with self.engine.connect() as connection:
+            for table in tables_list:
+                connection.execute(text("PRAGMA foreign_keys=OFF;"))
+                connection.execute(text(f"DROP TABLE IF EXISTS {table};"))
+                print(f"Table {table} dropped")
+
+    def seed(self):
+        self.drop_tables(self.tables_to_seed)
+        self.create_schema()
+
+        for table in self.tables_to_seed:
+            seeds = pd.read_excel(self.__seeds_path, sheet_name=table)
+
+            try:
+                seeds.to_sql(table, con=self.engine, if_exists='append', index=False)
+                print(colored(f"Table {table} seeded", "green"))
+            except IntegrityError:
+                raise Exception(IntegrityError)
+            except Exception as error:
+                raise Exception(colored(f"Error while seeding {table} data. {error}", "red"))
 
 
-with connection_handler as database:
-    engine = database.get_engine()
-    inspector = inspect(engine)
-    table_names = inspector.get_table_names()
-    print(colored(f"Started seedings tables: {table_names}", "green"))
 
-    for table_name in table_names:
-        try:
-            database.execute(f"TRUNCATE TABLE {table_name} CASCADE;")
-        except Exception as error:
-            print(error)
-            raise Exception(colored(f"Error while truncating table {table_name}", "red"))
-        
-        table_seeds = pd.read_excel(dir_path + '/seeds.xlsx', sheet_name=table_name)
-
-        try:
-            table_seeds.to_sql(table_name, con=engine, if_exists='append', index=False)
-            print(colored(f"Table {table_name} seeded", "green"))
-        except IntegrityError:
-            raise Exception(colored(f"Error while seeding {table_name} data. Some data already exists", "red"))
-        except Exception as error:
-            raise Exception(colored(f"Error while seeding {table_name} data. {error}", "red"))
-        
-        
-      
+Seeder().seed()

@@ -8,13 +8,13 @@ user_category_mock = {
 }
 
 def test_insert_user_category():
-    result = UserCategoriesRespository().insert(user_category_mock)
-    print(result)
+    UserCategoriesRespository().insert(user_category_mock)
+    
 
 def test_get_all_user_categories():
-    result = UserCategoriesRespository().get_all()
-    print(result)
+    UserCategoriesRespository().get_all()
+    
 
 def test_delete_user_category():
-    result = UserCategoriesRespository().delete(user_category_mock["uuid"])
-    print(result)
+    UserCategoriesRespository().delete(user_category_mock["uuid"])
+    
