@@ -1,5 +1,5 @@
 from sqlalchemy.orm import relationship
-from src.database.settings.base import Base
+from src.models.database.settings.base import Base
 from sqlalchemy import Column, String, ForeignKey, DateTime, Integer
 from datetime import datetime
 from sqlalchemy.sql import func
@@ -22,7 +22,7 @@ class Ratings(Base):
                 return {
                         "id": self.id,
                         "stars": self.stars,
-                        "comment": self.comment,
+                        "review": self.review,
                         "id_establishment": self.id_establishment,
                         "id_user": self.id_user
                 }

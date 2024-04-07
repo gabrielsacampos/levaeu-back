@@ -2,7 +2,7 @@ from typing import Dict
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from src.models.entities.user_categories import UserCategories
-from src.database.settings.connection import connection_handler
+from src.models.database.settings.connection import connection_handler
 
 class UserCategoriesRespository():
     def insert(self, user_category: Dict) -> Dict:

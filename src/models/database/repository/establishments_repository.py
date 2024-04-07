@@ -1,5 +1,5 @@
 from typing import Dict
-from src.database.settings.connection import connection_handler
+from src.models.database.settings.connection import connection_handler
 from src.models.entities.establishments import Establishments
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
