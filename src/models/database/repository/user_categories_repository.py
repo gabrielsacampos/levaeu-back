@@ -3,6 +3,8 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from src.models.entities.user_categories import UserCategories
 from src.models.database.settings.connection import connection_handler
+from src.errors.http_conflict import HttpConflictException
+from src.errors.http_not_found import HttpNotFoundException
 
 class UserCategoriesRespository():
     def insert(self, user_category: Dict) -> Dict:
@@ -19,7 +21,7 @@ class UserCategoriesRespository():
                 return user_category
             except IntegrityError:
                 database.session.rollback()
-                raise Exception("User category already exists.")
+                raise HttpConflictException("User category id already exists.")
                 
 
     def get_all(self) -> Dict:
@@ -36,5 +38,5 @@ class UserCategoriesRespository():
                 database.session.commit()
             except UnmappedInstanceError:
                 database.session.rollback()
-                raise Exception("Could not delete user category while is not found.")
+                raise HttpNotFoundException("Could not delete user category while is not found.")
             return user_category

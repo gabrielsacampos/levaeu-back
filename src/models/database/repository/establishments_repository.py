@@ -3,6 +3,8 @@ from src.models.database.settings.connection import connection_handler
 from src.models.entities.establishments import Establishments
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
+from src.errors.http_conflict import HttpConflictException
+from src.errors.http_not_found import HttpNotFoundException
 
 
 
@@ -25,7 +27,7 @@ class EstablishmentsRepository:
             
             except IntegrityError:
                 database.session.rollback()
-                raise Exception("Establishment already exists or not found id_type.")
+                raise HttpConflictException("Establishment id already exists or not found foreign keys")
             
             except Exception as error:
                 database.session.rollback()  
@@ -34,6 +36,8 @@ class EstablishmentsRepository:
     def find_by_id(self, establishment_id: Dict) -> Dict:
         with connection_handler as database:
             establishment = database.session.query(Establishments).filter_by(id=establishment_id).first()
+            if establishment is None:
+                raise HttpNotFoundException("Establishment not found.")
             return establishment
                 
         
@@ -45,7 +49,7 @@ class EstablishmentsRepository:
                 database.session.commit()
             except UnmappedInstanceError:
                 database.session.rollback()
-                raise Exception("Could not delete establishment while is not found.")    
+                raise HttpNotFoundException("Could not delete establishment while is not found.")    
             return establishment
 
     def get_all(self) -> Dict:

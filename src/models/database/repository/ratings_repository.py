@@ -3,6 +3,8 @@ from src.models.database.settings.connection import connection_handler
 from src.models.entities.ratings import Ratings
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
+from src.errors.http_conflict import HttpConflictException
+from src.errors.http_not_found import HttpNotFoundException
 
 class RatingsRepository:
     def insert(self, rating: Dict) -> Dict:
@@ -22,7 +24,7 @@ class RatingsRepository:
             
             except IntegrityError:
                 database.session.rollback()
-                raise Exception("Rating already exists or not found id_establishment.")
+                raise HttpConflictException("Rating id already exists or not found foreign keys")
             
             except Exception as error:
                 database.session.rollback()  
@@ -31,6 +33,8 @@ class RatingsRepository:
     def find_by_id(self, rating_id: Dict) -> Dict:
         with connection_handler as database:
             rating = database.session.query(Ratings).filter_by(id=rating_id).first()
+            if rating is None:
+                raise HttpNotFoundException("Rating not found.")
             return rating
         
     def delete(self, rating_id: Dict) -> Dict:
@@ -41,7 +45,7 @@ class RatingsRepository:
                 database.session.commit()
             except UnmappedInstanceError:
                 database.session.rollback()
-                raise Exception("Could not delete rating while is not found.")    
+                raise HttpNotFoundException("Could not delete rating while is not found.")    
             return rating
         
     def get_all(self) -> Dict:
