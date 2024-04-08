@@ -26,3 +26,4 @@ class Ratings(Base):
                         "id_establishment": self.id_establishment,
                         "id_user": self.id_user
                 }
+        
