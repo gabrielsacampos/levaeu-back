@@ -12,7 +12,8 @@ class RatingsRepository:
                     id=rating.get("uuid"),
                     stars=rating.get("stars"),
                     review=rating.get("review"),
-                    id_establishment=rating.get("id_establishment")
+                    id_establishment=rating.get("id_establishment"),
+                    id_user=rating.get("id_user")
                 )
                 database.session.add(rating)
                 database.session.commit()

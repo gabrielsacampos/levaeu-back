@@ -10,8 +10,8 @@ establishment_mock = {
         "name": "The Grate Place",
         "address": "The Grate Street, 123",
         "description": "The Grate Place to be",
-        "id_type": "uuid-park",
-        "id_sponsor": "uuid-john"
+        "id_type": "uuid-private-park",
+        "id_sponsor": "uuid-joey-doe"
     } 
 
 def test_insert_establishment():

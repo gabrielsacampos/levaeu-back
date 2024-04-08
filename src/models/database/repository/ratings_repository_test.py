@@ -5,8 +5,8 @@ rating_mock = {
     "uuid": "random-uuid-rating-001",
     "stars": 5,
     "review": "Nice place to go with friends and family.",
-    "id_establishment": "uuid-the-great-cinema",
-    "id_user": "uuid-jack"
+    "id_establishment": "uuid-cinelandia",
+    "id_user": "uuid-jane-silva"
 }
 
 
