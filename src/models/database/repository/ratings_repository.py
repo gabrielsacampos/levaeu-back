@@ -1,6 +1,9 @@
 from typing import Dict
 from src.models.database.settings.connection import connection_handler
 from src.models.entities.ratings import Ratings
+from src.models.entities.users import Users
+from src.models.entities.establishments import Establishments
+from src.models.entities.user_categories import UserCategories
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from src.errors.http_conflict import HttpConflictException
@@ -50,6 +53,28 @@ class RatingsRepository:
         
     def get_all(self) -> Dict:
         with connection_handler as database:
-            ratings = database.query(Ratings).all()
-            ratings = [rating.to_dict() for rating in ratings]
-            return ratings
+            ratings = database.query(
+                Ratings, 
+                Establishments, 
+                Users, 
+                UserCategories
+            ).order_by(
+                Ratings.updated_at.desc()
+            ).join(
+                Establishments, 
+                Establishments.id == Ratings.id_establishment
+            ).join(
+                Users, 
+                Users.id == Ratings.id_user
+            ).join(
+                UserCategories, 
+                UserCategories.checkpoint == Users.global_score
+            ).all()
+            result_list = []
+            for rating, establishment, user, user_catgory in ratings:
+                rating_dict = rating.to_dict() 
+                rating_dict['establishment_name'] = establishment.name
+                rating_dict['user_name'] = user.name
+                rating_dict['category_name'] = user_catgory.name
+                result_list.append(rating_dict)
+        return result_list

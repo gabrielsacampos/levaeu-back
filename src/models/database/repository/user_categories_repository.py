@@ -13,30 +13,30 @@ class UserCategoriesRespository():
                 user_category = UserCategories(
                     id=user_category.get("uuid"),
                     name=user_category.get("name"),
-                    reviews_checkpoint=user_category.get("reviews_checkpoint")
+                    checkpoint=user_category.get("checkpoint")
                 )
 
-                database.session.add(user_category)
-                database.session.commit()
+                database.add(user_category)
+                database.commit()
                 return user_category
             except IntegrityError:
-                database.session.rollback()
+                database.rollback()
                 raise HttpConflictException("User category id already exists.")
                 
 
     def get_all(self) -> Dict:
         with connection_handler as database:
-            user_categories = database.session.query(UserCategories).all()
+            user_categories = database.query(UserCategories).all()
             user_categories = [user_category.to_dict() for user_category in user_categories]
             return user_categories
             
     def delete(self, user_category_id):
         with connection_handler as database:
             try:
-                user_category = database.session.query(UserCategories).filter_by(id=user_category_id).first()
-                database.session.delete(user_category)
-                database.session.commit()
+                user_category = database.query(UserCategories).filter_by(id=user_category_id).first()
+                database.delete(user_category)
+                database.commit()
             except UnmappedInstanceError:
-                database.session.rollback()
+                database.rollback()
                 raise HttpNotFoundException("Could not delete user category while is not found.")
             return user_category

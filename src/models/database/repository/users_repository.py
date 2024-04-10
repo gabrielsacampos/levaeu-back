@@ -1,10 +1,12 @@
 from typing import Dict
 from src.models.database.settings.connection import connection_handler
 from src.models.entities.users import Users
+from src.models.entities.user_categories import UserCategories
 from sqlalchemy.exc import IntegrityError
 from src.errors.http_conflict import HttpConflictException
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from src.errors.http_not_found import HttpNotFoundException
+from sqlalchemy import func
 
 
 class UsersRepository:
@@ -52,6 +54,20 @@ class UsersRepository:
 
     def get_all(self) -> Dict:
         with connection_handler as database:
-            users = database.query(Users).all()
-            users = [user.to_dict() for user in users]
-            return users
+            users = database.query(
+                Users, 
+                UserCategories
+            ).join(
+                UserCategories, 
+                UserCategories.checkpoint == func.floor(Users.global_score)
+            ).order_by(
+                Users.week_score.desc()
+            ).all()
+            result_list = []
+            for user, user_category in users:
+                user_dict = user.to_dict() 
+                user_dict['category_name'] = user_category.name  
+                result_list.append(user_dict)
+
+        return result_list
+

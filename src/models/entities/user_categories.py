@@ -8,7 +8,7 @@ class UserCategories(Base):
 
     id = Column(String, primary_key=True)
     name = Column(String, nullable=False)
-    reviews_checkpoint = Column(Integer, nullable=False)
+    checkpoint = Column(Integer, nullable=False)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
@@ -16,5 +16,5 @@ class UserCategories(Base):
         return {
             "id": self.id,
             "name": self.name,
-            "reviews_checkpoint": self.reviews_checkpoint
+            "checkpoint": self.checkpoint
         }

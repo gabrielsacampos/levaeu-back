@@ -13,17 +13,17 @@ class EstablishmentTypesRepository():
                     id=establishment_type.get("uuid"),
                     name=establishment_type.get("name")
                 )
-                database.session.add(establishment_type)
-                database.session.commit()
+                database.add(establishment_type)
+                database.commit()
 
                 return establishment_type
             except IntegrityError:
-                database.session.rollback()
+                database.rollback()
                 raise HttpConflictException("Establishment id already exists or not found foreign keys")
 
     def find_by_id(self, establishment_type_id: Dict) -> Dict:
         with connection_handler as database:
-            establishment_types = database.session.query(EstablishmentTypes).filter_by(id=establishment_type_id).first()
+            establishment_types = database.query(EstablishmentTypes).filter_by(id=establishment_type_id).first()
             if establishment_types is None:
                 raise HttpNotFoundException("Establishment type not found.")
             return establishment_types
@@ -31,10 +31,10 @@ class EstablishmentTypesRepository():
     def delete(self, establishment_type_id: Dict) -> Dict:
         with connection_handler as database:
             try:
-                establishment_type = database.session.query(EstablishmentTypes).filter_by(id=establishment_type_id).first()
-                database.session.delete(establishment_type)
-                database.session.commit()
+                establishment_type = database.query(EstablishmentTypes).filter_by(id=establishment_type_id).first()
+                database.delete(establishment_type)
+                database.commit()
                 return establishment_type
             except UnmappedInstanceError:
-                database.session.rollback()
+                database.rollback()
                 raise HttpNotFoundException("Could not delete establishment while is not found.")

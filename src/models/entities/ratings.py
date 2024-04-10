@@ -24,6 +24,7 @@ class Ratings(Base):
                         "stars": self.stars,
                         "review": self.review,
                         "id_establishment": self.id_establishment,
-                        "id_user": self.id_user
+                        "id_user": self.id_user,
+                        "updated_at": self.updated_at,
                 }
         

@@ -4,7 +4,7 @@ from src.models.database.repository.user_categories_repository import UserCatego
 user_category_mock = {
     "uuid": "random-uuid-user-category-001",
     "name": "Movie Lovers",
-    "reviews_checkpoint": 2
+    "checkpoint": 2
 }
 
 def test_insert_user_category():
