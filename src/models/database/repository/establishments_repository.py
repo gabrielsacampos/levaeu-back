@@ -20,22 +20,22 @@ class EstablishmentsRepository:
                     id_type=establishment.get("id_type"),
                     id_sponsor=establishment.get("id_sponsor")
                 )
-                database.session.add(establishment)
-                database.session.commit()
+                database.add(establishment)
+                database.commit()
 
                 return establishment
             
             except IntegrityError:
-                database.session.rollback()
+                database.rollback()
                 raise HttpConflictException("Establishment id already exists or not found foreign keys")
             
             except Exception as error:
-                database.session.rollback()  
+                database.rollback()  
                 raise error 
     
     def find_by_id(self, establishment_id: Dict) -> Dict:
         with connection_handler as database:
-            establishment = database.session.query(Establishments).filter_by(id=establishment_id).first()
+            establishment = database.query(Establishments).filter_by(id=establishment_id).first()
             if establishment is None:
                 raise HttpNotFoundException("Establishment not found.")
             return establishment
@@ -44,17 +44,17 @@ class EstablishmentsRepository:
     def delete(self, establishment_id: Dict) -> Dict:
         with connection_handler as database:
             try:
-                establishment = database.session.query(Establishments).filter_by(id=establishment_id).first()
-                database.session.delete(establishment)
-                database.session.commit()
+                establishment = database.query(Establishments).filter_by(id=establishment_id).first()
+                database.delete(establishment)
+                database.commit()
             except UnmappedInstanceError:
-                database.session.rollback()
+                database.rollback()
                 raise HttpNotFoundException("Could not delete establishment while is not found.")    
             return establishment
 
     def get_all(self) -> Dict:
         with connection_handler as database:
-            establishments = database.session.query(Establishments).all()
+            establishments = database.query(Establishments).all()
             establishments = [establishment.to_dict() for establishment in establishments]
             return establishments
         

@@ -3,7 +3,7 @@ from .establishment_type_repository import EstablishmentTypesRepository
 import pytest
 
 
-connection_handler.connect()
+connection_handler
 establishments_repository = EstablishmentTypesRepository()
 
 establishment_type_mock = {

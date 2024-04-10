@@ -16,22 +16,22 @@ class UsersRepository:
                     name=user.get("name"),
                     email=user.get("email"),
                 )
-                database.session.add(user)
-                database.session.commit()
+                database.add(user)
+                database.commit()
 
                 return user
             
             except IntegrityError:
-                database.session.rollback()
+                database.rollback()
                 raise HttpConflictException("User id or email already exists.")
             
             except Exception as error:
-                database.session.rollback()  
+                database.rollback()  
                 raise error
             
     def get_user_by_id(self, user_id: str) -> Dict:
         with connection_handler as database:
-            user = database.session.query(Users).filter(Users.id == user_id).first()
+            user = database.query(Users).filter(Users.id == user_id).first()
             if user is None:
                 raise HttpNotFoundException("User not found.")
             return user.to_dict()
@@ -39,19 +39,19 @@ class UsersRepository:
     def delete_user(self, user_id: str) -> Dict:
         with connection_handler as database:
             try:
-                user = database.session.query(Users).filter(Users.id == user_id).first()
-                database.session.delete(user)
-                database.session.commit()
+                user = database.query(Users).filter(Users.id == user_id).first()
+                database.delete(user)
+                database.commit()
                 return user.to_dict()
             except UnmappedInstanceError:
-                database.session.rollback()
+                database.rollback()
                 raise HttpNotFoundException("Could not delete user while is not found.")
             except Exception as error:
-                database.session.rollback()
+                database.rollback()
                 raise error
 
     def get_all(self) -> Dict:
         with connection_handler as database:
-            users = database.session.query(Users).all()
+            users = database.query(Users).all()
             users = [user.to_dict() for user in users]
             return users

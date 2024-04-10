@@ -6,7 +6,7 @@ from flask_openapi3 import OpenAPI, Info
 Info = Info(title="LevaEu API", version="1.0.0")
 app = Flask(__name__)
 app = OpenAPI(__name__, info=Info)
-CORS(app)
+CORS(app) 
 
 @app.route('/')
 def index():

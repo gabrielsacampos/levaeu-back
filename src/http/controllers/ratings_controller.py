@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ValidationError
 from flask import jsonify, request
 from src.server.server import app
-from src.services.ratings_service import RatingsService
+from src.models.database.repository import RatingsRepository
 from flask_openapi3 import Tag
 from src.http.http_request import HttpRequest
 from src.errors.error_handler import error_handler
@@ -25,8 +25,8 @@ def get_all_ratings():
     Returns a list of ratings with nested user and establishment
     """
     try:
-        result = RatingsService().get_all()
-        return jsonify(result.body), result.status_code
+        result = RatingsRepository().get_all()
+        return jsonify(result), 200
     except Exception as error:
         return error_handler(error)
     
@@ -48,7 +48,7 @@ def create_rating(body: CreateRatingsDTO):
     try:
         request = HttpRequest(body=request.json)
         data = RatingsDTO(**request.json)
-        rating = RatingsService().create(data)
+        rating = RatingsRepository().create(data)
         return jsonify(rating), 200
     except ValidationError as error:
         errors = error.errors()

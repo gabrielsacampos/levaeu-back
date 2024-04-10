@@ -2,7 +2,7 @@ from src.models.database.settings.connection import connection_handler
 from .establishments_repository import EstablishmentsRepository
 import pytest
 
-connection_handler.connect()
+connection_handler
 establishments_repository = EstablishmentsRepository()
 
 establishment_mock = {
