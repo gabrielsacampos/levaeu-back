@@ -19,10 +19,10 @@ def test_insert_establishment():
     print(result)
 
 def test_find_establishment_by_id():
-    result = establishments_repository.find_by_id(establishment_mock["uuid"])
+    result = establishments_repository.get_by_id(establishment_mock["uuid"])
     print(result)
 
 def test_delete_establishment():
-    result = establishments_repository.delete(establishment_mock["uuid"])
+    result = establishments_repository.delete_by_id(establishment_mock["uuid"])
     print(result)
 

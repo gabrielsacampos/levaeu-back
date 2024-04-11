@@ -17,10 +17,10 @@ def test_insert_rating():
 
 def test_find_by_id():
     ratings_repository = RatingsRepository()
-    result = ratings_repository.find_by_id(rating_mock["uuid"])
+    result = ratings_repository.get_by_id(rating_mock["uuid"])
     print(result)
 
 def test_delete_rating():
     ratings_repository = RatingsRepository()
-    result = ratings_repository.delete(rating_mock["uuid"])
+    result = ratings_repository.delete_by_id(rating_mock["uuid"])
     print(result)

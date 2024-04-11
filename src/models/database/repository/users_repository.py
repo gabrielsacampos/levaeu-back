@@ -17,6 +17,8 @@ class UsersRepository:
                     id=user.get("uuid"),
                     name=user.get("name"),
                     email=user.get("email"),
+                    global_score=user.get("global_score"),
+                    week_score=user.get("week_score")
                 )
                 database.add(user)
                 database.commit()
@@ -31,14 +33,14 @@ class UsersRepository:
                 database.rollback()  
                 raise error
             
-    def get_user_by_id(self, user_id: str) -> Dict:
+    def get_by_id(self, user_id: str) -> Dict:
         with connection_handler as database:
             user = database.query(Users).filter(Users.id == user_id).first()
             if user is None:
                 raise HttpNotFoundException("User not found.")
             return user.to_dict()
         
-    def delete_user(self, user_id: str) -> Dict:
+    def delete_by_id(self, user_id: str) -> Dict:
         with connection_handler as database:
             try:
                 user = database.query(Users).filter(Users.id == user_id).first()
@@ -68,6 +70,5 @@ class UsersRepository:
                 user_dict = user.to_dict() 
                 user_dict['category_name'] = user_category.name  
                 result_list.append(user_dict)
-
-        return result_list
+            return result_list
 

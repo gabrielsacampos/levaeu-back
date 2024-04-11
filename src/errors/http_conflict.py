@@ -1,4 +1,4 @@
-class HttpConflictException(Exception):
+class HttpConflictException(BaseException):
     def __init__(self, message: str = "Conflict"):
         super().__init__(409, message)
         self.message = message

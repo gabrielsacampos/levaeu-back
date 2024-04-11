@@ -21,14 +21,14 @@ class EstablishmentTypesRepository():
                 database.rollback()
                 raise HttpConflictException("Establishment id already exists or not found foreign keys")
 
-    def find_by_id(self, establishment_type_id: Dict) -> Dict:
+    def get_by_id(self, establishment_type_id: Dict) -> Dict:
         with connection_handler as database:
             establishment_types = database.query(EstablishmentTypes).filter_by(id=establishment_type_id).first()
             if establishment_types is None:
                 raise HttpNotFoundException("Establishment type not found.")
             return establishment_types
         
-    def delete(self, establishment_type_id: Dict) -> Dict:
+    def delete_by_id(self, establishment_type_id: Dict) -> Dict:
         with connection_handler as database:
             try:
                 establishment_type = database.query(EstablishmentTypes).filter_by(id=establishment_type_id).first()

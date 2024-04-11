@@ -33,7 +33,7 @@ class EstablishmentsRepository:
                 database.rollback()  
                 raise error 
     
-    def find_by_id(self, establishment_id: Dict) -> Dict:
+    def get_by_id(self, establishment_id: Dict) -> Dict:
         with connection_handler as database:
             establishment = database.query(Establishments).filter_by(id=establishment_id).first()
             if establishment is None:
@@ -41,7 +41,7 @@ class EstablishmentsRepository:
             return establishment
                 
         
-    def delete(self, establishment_id: Dict) -> Dict:
+    def delete_by_id(self, establishment_id: Dict) -> Dict:
         with connection_handler as database:
             try:
                 establishment = database.query(Establishments).filter_by(id=establishment_id).first()

@@ -33,14 +33,14 @@ class RatingsRepository:
                 database.rollback()  
                 raise error
     
-    def find_by_id(self, rating_id: Dict) -> Dict:
+    def get_by_id(self, rating_id: Dict) -> Dict:
         with connection_handler as database:
             rating = database.query(Ratings).filter_by(id=rating_id).first()
             if rating is None:
                 raise HttpNotFoundException("Rating not found.")
-            return rating
+            return rating.to_dict()
         
-    def delete(self, rating_id: Dict) -> Dict:
+    def delete_by_id(self, rating_id: Dict) -> Dict:
         with connection_handler as database:
             try:
                 rating = database.query(Ratings).filter_by(id=rating_id).first()

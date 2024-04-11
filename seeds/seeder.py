@@ -26,7 +26,7 @@ class Seeder(DBConnectionHandler):
 
     def seed(self):
         self.drop_tables(self.tables_to_seed)
-
+        self.settup_database()
         for table in self.tables_to_seed:
             seeds = pd.read_excel(self.__seeds_path, sheet_name=table)
 

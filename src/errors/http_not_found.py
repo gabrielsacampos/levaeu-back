@@ -1,4 +1,4 @@
-class HttpNotFoundException(Exception):
+class HttpNotFoundException(BaseException):
     def __init__(self, message: str = "Not found"):
         super().__init__(404, message)
         self.message = message
