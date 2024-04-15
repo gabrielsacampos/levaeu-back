@@ -12,7 +12,8 @@ users_tag = Tag(name="Users", description="Methods to Users")
 @app.get('/users', tags=[users_tag])
 def get_all_users():
     """
-    Retrieve a list of Users
+    Retrieve a list of Users | compose RankingList component
+    It return a list of users ordered by week score and composes RankingList component
     """
     users = UsersRepository().get_all()
     return jsonify(users)
@@ -30,9 +31,7 @@ def get_user_by_id(path: UserPath):
 
     """
     try:
-        print(path.id, 'path id')
-        print(path, 'onlypath')
-        user = UsersRepository().get_user_by_id(path.id)
+        user = UsersRepository().get_by_id(path.id)
         return jsonify(user)
     except Exception as error:
             raise error_handler(error)

@@ -34,6 +34,7 @@ class Seeder(DBConnectionHandler):
                 seeds.to_sql(table, con=self.engine, if_exists='append', index=False)
                 print(colored(f"Table {table} seeded", "green"))
             except IntegrityError:
+                print(colored(f"Error while seeding {table} data. IntegrityError", "red"))
                 raise Exception(IntegrityError)
             except Exception as error:
                 raise Exception(colored(f"Error while seeding {table} data. {error}", "red"))

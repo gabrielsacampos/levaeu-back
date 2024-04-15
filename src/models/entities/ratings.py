@@ -25,6 +25,6 @@ class Ratings(Base):
                         "review": self.review,
                         "id_establishment": self.id_establishment,
                         "id_user": self.id_user,
-                        "updated_at": self.updated_at,
+                        "updated_at": self.updated_at, 
                 }
         

@@ -1,6 +1,5 @@
 from src.models.database.settings.connection import connection_handler
 from .establishments_repository import EstablishmentsRepository
-import pytest
 
 connection_handler
 establishments_repository = EstablishmentsRepository()
@@ -26,3 +25,6 @@ def test_delete_establishment():
     result = establishments_repository.delete_by_id(establishment_mock["uuid"])
     print(result)
 
+def test_get_all_establishments():
+    result = establishments_repository.get_all()
+    print(result)

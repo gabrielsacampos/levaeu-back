@@ -39,8 +39,8 @@ def get_rating_by_id(path: RatingsPath):
 )
 def get_all_ratings():
     """
-    Retrieve a list of ratings
-    Returns a list of ratings with nested user and establishment
+    Retrieve a list of ratings | compose RatingList component
+    Return a list of ratings with nested user and establishment ordered by recent date
     """
     try:
         result = RatingsRepository().get_all()

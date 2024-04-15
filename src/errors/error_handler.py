@@ -7,4 +7,6 @@ def error_handler(error: BaseException) -> HttpResponse:
         return HttpResponse(status_code=404, body={"message": str(error)})
     if isinstance(error, HttpConflictException):
         return HttpResponse(status_code=409, body={"message": str(error)})
+    if isinstance(error, Exception):
+        return HttpResponse(status_code=500, body={"message": str(error)})
     
