@@ -8,23 +8,22 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import UnmappedInstanceError
 from src.errors.http_conflict import HttpConflictException
 from src.errors.http_not_found import HttpNotFoundException
-
+from termcolor import colored
+from sqlalchemy import text
 
 class RatingsRepository:
-    def insert(self, rating: Dict) -> Dict:
+    def insert(self, rating_data: Dict) -> Dict:
         with connection_handler as database:
             try:
                 rating = Ratings(
-                    id=rating.get("uuid"),
-                    stars=rating.get("stars"),
-                    review=rating.get("review"),
-                    id_establishment=rating.get("id_establishment"),
-                    id_user=rating.get("id_user")
+                    stars=rating_data.get("stars"),
+                    review=rating_data.get("review"),
+                    id_establishment=rating_data.get("id_establishment"),
+                    id_user=rating_data.get("id_user")
                 )
                 database.add(rating)
                 database.commit()
-
-                return rating
+                return rating.to_dict()
 
             except IntegrityError:
                 database.rollback()
@@ -54,28 +53,34 @@ class RatingsRepository:
 
     def get_all(self) -> Dict:
         with connection_handler as database:
-            ratings = database.query(
-                Ratings,
-                Establishments,
-                Users,
-                UserCategories
-            ).order_by(
-                Ratings.updated_at.desc()
-            ).join(
-                Establishments,
-                Establishments.id == Ratings.id_establishment
-            ).join(
-                Users,
-                Users.id == Ratings.id_user
-            ).join(
-                UserCategories,
-                UserCategories.checkpoint == Users.global_score
-            ).all()
+            sql = """
+                SELECT 
+                    u.name AS user_name,
+                    u.image_url AS user_image_url,
+                    uc.name AS user_category,
+                    r.review AS review, 
+                    r.updated_at AS date,
+                    r.stars AS stars,
+                    e.name as establishment_name
+                FROM ratings AS r
+                INNER JOIN users AS u ON r.id_user = u.id
+                INNER JOIN establishments AS e ON r.id_establishment = e.id
+                INNER JOIN user_categories AS uc ON uc.checkpoint = CAST(u.global_score AS INTEGER)
+                ORDER BY r.updated_at DESC;
+            """
+
+            ratings = database.execute(text(sql))
+
             result_list = []
-            for rating, establishment, user, user_catgory in ratings:
-                rating_dict = rating.to_dict()
-                rating_dict['establishment_name'] = establishment.name
-                rating_dict['user_name'] = user.name
-                rating_dict['category_name'] = user_catgory.name
-                result_list.append(rating_dict)
-        return result_list
+            for row in ratings:
+                result_list.append({
+                    "user_name": row.user_name,
+                    "user_category": row.user_category,
+                    "user_image_url": row.user_image_url,   
+                    "review": row.review,
+                    "date": row.date,
+                    "stars": row.stars,
+                    "establishment_name": row.establishment_name
+
+                })
+            return result_list

@@ -10,6 +10,7 @@ class Users(Base):
 
     id = Column(String, primary_key=True)
     name = Column(String, nullable=False)
+    image_url = Column(String, nullable=False)
     email = Column(String, nullable=False)
     global_score = Column(Float, nullable=False)
     week_score = Column(Integer, nullable=False)
@@ -24,6 +25,7 @@ class Users(Base):
         return {
             "id": self.id,
             "name": self.name,
+            "image_url": self.image_url,
             "email": self.email,
             "global_score": self.global_score,
             "week_score": self.week_score,

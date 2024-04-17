@@ -59,19 +59,10 @@ class EstablishmentsRepository:
         with connection_handler as database:
             establishments = database.query(
                 Establishments, 
-                EstablishmentImages, 
-                Ratings
-            ).join(
-                EstablishmentImages, Establishments.id == EstablishmentImages.id_establishment
-            ).join(
-                Ratings, Establishments.id == Ratings.id_establishment
             ).all()
-
             result_list = []
-        for establishment, image, rating in establishments:
+        for establishment in establishments:
             establishment_dict = establishment.to_dict()
-            establishment_dict["image"] = image.to_dict()
-            establishment_dict["rating"] = rating.to_dict()
             result_list.append(establishment_dict)
 
         return result_list
@@ -79,7 +70,6 @@ class EstablishmentsRepository:
 
     def get_topcards(self) -> Dict:
         with connection_handler as database:
-            print(colored("get_topcards", "red"))
 
             establishments = database.query(
                 Establishments, EstablishmentImages 
@@ -95,13 +85,10 @@ class EstablishmentsRepository:
     
             result_list = []
             for establishment, image in establishments:
-                print(colored(establishment.id, "green"))
-                print(colored(image.id, "yellow"))
                 stars = [rating.stars for rating in establishment.ratings]
                 ratings_avg = statistics.mean(stars)
-                print(colored(establishment, "green"))
                 establishment_dict = establishment.to_dict()
-                establishment_dict["image"] = image.to_dict()
+                establishment_dict["image_url"] = image.image_url
                 establishment_dict["ratings_avg"] = ratings_avg
                 result_list.append(establishment_dict)
         return result_list

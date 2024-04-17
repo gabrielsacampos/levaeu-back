@@ -16,6 +16,7 @@ class UsersRepository:
                 user = Users(
                     id=user.get("uuid"),
                     name=user.get("name"),
+                    image_url=user.get("image_url"),
                     email=user.get("email"),
                     global_score=user.get("global_score"),
                     week_score=user.get("week_score")

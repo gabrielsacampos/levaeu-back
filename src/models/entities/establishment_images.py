@@ -9,6 +9,7 @@ class EstablishmentImages(Base):
     id = Column(String, primary_key=True)
     id_establishment = Column(String, ForeignKey("establishments.id"))
     img_description = Column(String, nullable=False)
+    image_url = Column(String, nullable=False)
     cover = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
@@ -19,6 +20,7 @@ class EstablishmentImages(Base):
     def to_dict(self):
         return {
             "id": self.id,
+            "image_url": self.image_url,    
             "id_establishment": self.id_establishment,
             "img_description": self.img_description,
             "cover": self.cover,

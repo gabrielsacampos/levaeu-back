@@ -3,11 +3,12 @@ from src.models.database.settings.base import Base
 from sqlalchemy import Column, String, ForeignKey, DateTime, Integer
 from datetime import datetime
 from sqlalchemy.sql import func
+import uuid
 
 class Ratings(Base):
         __tablename__: str = 'ratings'
         
-        id = Column(String, primary_key=True)
+        id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
         stars = Column(Integer, nullable=False)
         review = Column(String, nullable=False)
         id_establishment = Column(String, ForeignKey("establishments.id"), nullable=False)
