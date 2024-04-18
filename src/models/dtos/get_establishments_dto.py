@@ -9,3 +9,6 @@ class EstablishmentsDTO(BaseModel):
     id_sponsor: str
     created_at: str
     updated_at: str
+
+class EstablishmentsListDTO(BaseModel):
+    establishments: list[EstablishmentsDTO]

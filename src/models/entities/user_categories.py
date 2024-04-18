@@ -1,4 +1,4 @@
-from src.models.database.settings.base import Base
+from src.database.settings.base import Base
 from sqlalchemy import Column, String, DateTime, Integer, PrimaryKeyConstraint
 from datetime import datetime
 from sqlalchemy.sql import func

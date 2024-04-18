@@ -1,4 +1,4 @@
-from src.models.database.repository.user_categories_repository import UserCategoriesRespository   
+from src.repository.user_categories_repository import UserCategoriesRespository   
 
 
 user_category_mock = {

@@ -1,6 +1,6 @@
 from flask import Flask, redirect
 from flask_cors import CORS
-from src.models.database.repository import *
+from src.repository import *
 from flask_openapi3 import OpenAPI, Info
 
 info = Info(

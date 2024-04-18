@@ -1,4 +1,4 @@
-from src.models.database.repository.users_repository import UsersRepository
+from src.repository.users_repository import UsersRepository
 
 
 user_mock = {

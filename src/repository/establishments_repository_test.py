@@ -1,4 +1,4 @@
-from src.models.database.settings.connection import connection_handler
+from src.database.settings.connection import connection_handler
 from .establishments_repository import EstablishmentsRepository
 
 connection_handler

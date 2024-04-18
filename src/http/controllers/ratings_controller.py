@@ -1,40 +1,18 @@
 from pydantic import BaseModel, ValidationError
 from flask import jsonify, request
 from src.server.server import app
-from src.models.database.repository import RatingsRepository
+from src.repository import RatingsRepository
 from flask_openapi3 import Tag
-from src.http.http_request import HttpRequest
 from src.errors.error_handler import error_handler
 from src.models.dtos import *
-from pydantic import BaseModel, Field
-from termcolor import colored
-
 
 ratings_tag = Tag(name="Ratings", description="Retrieve a list of ratings or create")
 
 
-class RatingsPath(BaseModel):
-    id: str = Field(..., description="Rating ID")
-
-@app.get('/ratings/<string:id>', tags=[ratings_tag])
-def get_rating_by_id(path: RatingsPath):
-    """
-    Retrieve a unique rating
-    Returns a rating with nested user and establishment
-    """
-    try:
-        rating_id = path.id
-        rating = RatingsRepository().get_by_id(rating_id)
-        return jsonify(rating)
-    except Exception as error:
-        return error_handler(error)
-
 
 @app.get('/ratings', tags=[ratings_tag],
          responses={
-            "201": RatingsDTO, 
-            "400": ErrorCreateSchemaDTO, 
-            "409": ErrorCreateSchemaDTO,
+            "200": RatingsListDTO, 
             500: {"description": "Internal Server Error"}
         }
 )

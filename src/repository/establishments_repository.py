@@ -1,6 +1,6 @@
 import statistics
 from typing import Dict
-from src.models.database.settings.connection import connection_handler
+from src.database.settings.connection import connection_handler
 from src.models.entities.establishments import Establishments
 from src.models.entities.establishment_images import EstablishmentImages
 from src.models.entities.ratings import Ratings
