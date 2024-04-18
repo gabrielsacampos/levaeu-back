@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from src.models.database.settings.connection import DBConnectionHandler
+from src.database.settings.connection import DBConnectionHandler
 from sqlalchemy import text
 from sqlalchemy import inspect
 from sqlalchemy.exc import IntegrityError

@@ -1,51 +1,90 @@
 # LevaEu
 
-As its core, LevaEu is a platform that connects people with establishments, providing families with a relaxing and funny day filled with good memories.
-The project is currently in the initial phase of building a Minimum Viable Product (MVP) as part of the postgraduate Software Engineering sprint at PUC-RJ.
+LevaEu is a dynamic platform designed to connect people with establishments, offering families an enjoyable and memorable day out. This project is in the early stages of developing a Minimum Viable Product (MVP) as part of a postgraduate Software Engineering sprint at PUC-RJ.
 
-The architecture of this project follows the MVC pattern, separating the frontend and backend into different repositories. You can check the frontend repository at this link [__comming soon__].
+The architecture employs the MVC pattern, with distinct repositories for the frontend and backend. You can explore the frontend repository [here](https://github.com/gabrielsacampos/levaeu-front).
+
+## Getting Started
+### Prerequisites
+To get started with this project, you need to clone this repository to your local machine. Follow these steps:
+
+1. Open your terminal.
+2. Navigate to the directory where you want the cloned directory to be located.
+3. Execute the git clone command:
+    ```bash
+    git clone https://github.com/gabrielsacampos/levaeu-back.git
+    ```
+This command clones the backend repository into your chosen directory.
+
+#### Installation
+To set up the project on your local machine:
+
+1. Navigate to the project directory:
+      ```bash
+    cd levaeu-back
+    ```
+2. Recommend using a virtual environment:
+```bash
+   python3 -m venv env
+   source env/bin/activate
+```
+
+3. Install the required dependencies:
+   ```bash
+   (env)$ pip install -r requirements.txt
+   ```
+
+4. To run the server:
+```bash
+   (env)$ python app.py
+```
+Once the server is running, you can start the frontend interface [here](https://github.com/gabrielsacampos/levaeu-front).
+
+
+### Troubleshooting
+If you encounter a __ModuleNotFoundError__, you can set the Python path by running:
+```bash    
+    export PYTHONPATH=./:$PYTHONPATH
+```
+
+### Project Structure
+
 
 #### storage.sqlite3
-   > Populated sqlite database with fake data
+   - Contains a pre-populated SQLite database with sample data for testing and development purposes.
 
 #### seeds 
-   > When needed, we can seed our database from _./seeds/seeder.py_
-    It runs a pandas to **DROP** each table and seed them with fake data from xslx file at _.seed/seed.xlsx_
+ When need, we can reseed our database with:
+ ```bash
+   python seeds/seeder.py
+ ```
+   This script utilizes pandas to **DROP** each table and reseed them using data from an Excel file located at _.seed/seed.xlsx.
      
 ### src
-#### - models
-###### -- entities
-   > Building database schema
+- __Models__
+   - __Entities__: Defines the database schema, including:
+      * User Categories
+      * Users
+      * Establishments
+      * Establishment Types
+      * Establishment Images
+      * Ratings
 
-###### -- repository
-   > Implements methods to database
+   - __DTOS__: Data Transfer Objects for validating requests.
 
-#### - http
-###### -- controllers
-   > Routing our application
-#### - services
-   > Implements methods to handle request from controllers
-
-
-
-ModuleNotFoundError:
-    
-    export PYTHONPATH=./:$PYTHONPATH
+- __Repository__: Implements database access methods for:
+   - Users
+   - Establishments
+   - Ratings
 
 
-Instalation:
-    1-
-    
-    $ git clone https://github.com/gabrielsacampos/levaeu-back.git
-    
-2 - Install requirements
-    
-    $ pip install -r requirements.txt
+- __HTTP__: Controllers for handling requests related to:
+   * Users Controller
+   * Establishments Controller
+   * Ratings Controller
 
-4 - testing
 
-    $ pytest -s -v
 
-3 - running application
-    
-    $ python app.py
+
+
+Once server is running, lets start out frontend interface [here](https://github.com/gabrielsacampos/levaeu-front).
