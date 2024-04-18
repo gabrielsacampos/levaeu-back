@@ -1,3 +1,4 @@
+from termcolor import colored
 from typing import Dict
 from src.database.settings.connection import connection_handler
 from src.models.entities.users import Users
@@ -26,9 +27,9 @@ class UsersRepository:
 
                 return user
             
-            except IntegrityError:
+            except IntegrityError as error:
                 database.rollback()
-                raise HttpConflictException("User id or email already exists.")
+                raise HttpConflictException(f"Conflict while creating user: {error}")
             
             except Exception as error:
                 database.rollback()  

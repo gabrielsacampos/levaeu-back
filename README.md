@@ -84,7 +84,7 @@ If you encounter a __ModuleNotFoundError__, you can set the Python path by runni
    * Ratings Controller
 
 
-
+   ![infra diagram](./assets/infra.jpg)
 
 
 Once server is running, lets start out frontend interface [here](https://github.com/gabrielsacampos/levaeu-front).

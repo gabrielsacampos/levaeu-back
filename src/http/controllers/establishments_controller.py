@@ -15,7 +15,7 @@ establishments_tag = Tag(name="Establishments", description="Retrieve a list of 
              400: ErrorCreateSchemaDTO,
              409: ErrorCreateSchemaDTO,
              500: {"description": "Internal Server Error"}})
-def get_all_establishments_by_query():
+def get_all_establishments_topcards():
     """
     Retrieve top 4 establishments to compose topcards component
     Returns a list of establishments with tags: ['popular', 'advertising']
@@ -25,4 +25,24 @@ def get_all_establishments_by_query():
         return jsonify(establishments)
     except Exception as error:
         return error_handler(error)
+
+
+
+@app.get('/establishments', tags=[establishments_tag],
+         responses={
+             200: EstablishmentsListDTO,
+             400: ErrorCreateSchemaDTO,
+             409: ErrorCreateSchemaDTO,
+             500: {"description": "Internal Server Error"}})
+def get_all():
+    """
+    Retrieve all establishments to compose the select component into Rating Modal
+    Returns a list of establishments
+    """
+    try:
+        establishments = EstablishmentsRepository().get_all()
+        return jsonify(establishments)
+    except Exception as error:
+        return error_handler(error)
+
 

@@ -4,6 +4,7 @@ from src.repository.users_repository import UsersRepository
 user_mock = {
     "uuid": "uuid-new-user",
     "name": "Kaik The New",
+    "image_url": "https://www.google.com",
     "global_score": 1000,
     "week_score": 100,
     "email": "kaik@email.com"
